@@ -18,7 +18,7 @@
     },
     "params":
     { "type": "object",
-      "required": ["id","file"],
+      "required": ["id","local_file","remote_file"],
       "properties":{
         "id": {"type": "string"},
         "local_file": {"type": "string"},
