@@ -4,7 +4,7 @@
 ```json
 {
   "id":"s3_default",
-  "type":"runnerty-executor-s3",
+  "type":"@runnerty/executor-s3",
   "apiVersion": "2006-03-01",
   "accessKeyId": "ABC123",
   "secretAccessKey": "ABC123",
