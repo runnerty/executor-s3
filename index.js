@@ -44,14 +44,14 @@ class s3Executor extends Execution {
           let endOptions = {
             end: "error",
             messageLog: `S3 upload file Error: ${err}`,
-            execute_err_return: `S3 upload file Error: ${err}`
+            err_output: `S3 upload file Error: ${err}`
           };
           _this.end(endOptions);
         }
         else {
           let endOptions = {
             end: "end",
-            execute_return: JSON.stringify(data)
+            data_output: data
           };
           _this.end(endOptions);
         }
@@ -60,7 +60,7 @@ class s3Executor extends Execution {
       let endOptions = {
         end: "error",
         messageLog: `S3 method not accepted: ${awsS3Config.method}`,
-        execute_err_return: `S3 method not accepted: ${awsS3Config.method}`
+        err_output: `S3 method not accepted: ${awsS3Config.method}`
       };
       _this.end(endOptions);
     }
