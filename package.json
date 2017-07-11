@@ -1,6 +1,6 @@
 {
   "name": "@runnerty/executor-s3",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Runnerty module: s3 executor",
   "author": "Coderty",
   "license": "MIT",
