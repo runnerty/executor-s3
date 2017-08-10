@@ -1,6 +1,6 @@
 {
   "name": "@runnerty/executor-s3",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Runnerty module: s3 executor",
   "author": "Coderty",
   "license": "MIT",
@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/Coderty/runnerty-executor-s3#readme",
   "dependencies": {
-    "aws-sdk": "^2.82.0"
+    "aws-sdk": "^2.82.0",
+    "glob-to-regexp": "^0.3.0",
+    "is-glob": "^4.0.0"
   }
 }

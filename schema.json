@@ -44,28 +44,34 @@
     },
     "params": {
       "type": "object",
-      "required": [
-        "id",
-        "local_file",
-        "remote_file"
-      ],
-      "properties": {
-        "id": {
-          "type": "string"
+      "anyOf": [
+        {
+          "required": [
+            "id",
+            "local_file",
+            "remote_file"
+          ],
+          "properties": {
+            "id": { "type": "string" },
+            "local_file": { "type": "string" },
+            "remote_file": { "type": ["string","array"] },
+            "method": { "type": "string" },
+            "bucket": { "type": "string" }
+          }
         },
-        "local_file": {
-          "type": "string"
-        },
-        "remote_file": {
-          "type": "string"
-        },
-        "method": {
-          "type": "string"
-        },
-        "bucket": {
-          "type": "string"
+        {
+          "required": [
+            "id",
+            "remote_path"
+          ],
+          "properties": {
+            "id": { "type": "string" },
+            "remote_path": { "type": ["string","array"] },
+            "method": { "type": "string" },
+            "bucket": { "type": "string" }
+          }
         }
-      }
+      ]
     }
   }
 }
