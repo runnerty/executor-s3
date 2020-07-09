@@ -193,7 +193,7 @@ function _deleteS3Async(s3, bucket, files){
         }
         else {
           resolve(data);
-        }
+        }xc 
       });
     }else{
       resolve();
