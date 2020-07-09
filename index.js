@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
-const AWS = require("aws-sdk");
-const fs = require("fs");
-const path = require("path");
-const isGlob = require("is-glob");
-const globToRegExp = require("glob-to-regexp");
+const AWS = require('aws-sdk');
+const fs = require('fs');
+const path = require('path');
+const isGlob = require('is-glob');
+const globToRegExp = require('glob-to-regexp');
 
 const Execution = global.ExecutionClass;
 
@@ -28,15 +28,18 @@ class s3Executor extends Execution {
     const s3 = new AWS.S3(awsS3Config);
 
     switch (params.method) {
-      case "upload":
+      case 'upload':
         _upload(s3, params, _this);
         break;
-      case "delete":
+      case 'delete':
         _delete(s3, params, _this);
+        break;
+      case 'download':
+        _download(s3, params, _this);
         break;
       default:
         const endOptions = {
-          end: "error",
+          end: 'error',
           messageLog: `S3 method not accepted: ${awsS3Config.method}`,
           err_output: `S3 method not accepted: ${awsS3Config.method}`
         };
@@ -52,14 +55,14 @@ class s3Executor extends Execution {
  * @param executor
  * @private
  */
-function _upload(s3, params, executor){
+function _upload(s3, params, executor) {
   // call S3 to retrieve upload file to specified bucket
-  const uploadParams = {Bucket: params.bucket, Key: "", Body: ""};
+  const uploadParams = { Bucket: params.bucket, Key: '', Body: '' };
   const file_name = params.remote_file || path.basename(params.local_file);
 
   let fileStream = fs.createReadStream(params.local_file);
-  fileStream.on("error", (err) => {
-    executor.logger.log("error", "S3 upload reading file Error", params.local_file, err);
+  fileStream.on('error', err => {
+    executor.logger.log('error', 'S3 upload reading file Error', params.local_file, err);
   });
 
   uploadParams.Body = fileStream;
@@ -68,15 +71,14 @@ function _upload(s3, params, executor){
   s3.upload(uploadParams, (err, data) => {
     if (err) {
       const endOptions = {
-        end: "error",
+        end: 'error',
         messageLog: `S3 upload file Error: ${err}`,
         err_output: `S3 upload file Error: ${err}`
       };
       executor.end(endOptions);
-    }
-    else {
+    } else {
       const endOptions = {
-        end: "end",
+        end: 'end',
         data_output: data
       };
       executor.end(endOptions);
@@ -91,56 +93,53 @@ function _upload(s3, params, executor){
  * @param executor
  * @private
  */
-function _delete(S3, params, executor){
-
-  let dirName = "";
+function _delete(S3, params, executor) {
+  let dirName = '';
 
   // Check Glob, if exists set dirName
-  if (isGlob(params.remote_path)){
+  if (isGlob(params.remote_path)) {
     dirName = path.dirname(params.remote_path);
 
-    if (isGlob(dirName)){
+    if (isGlob(dirName)) {
       const endOptions = {
-        end: "error",
-        messageLog: "Glob only applicable to filenames.",
-        err_output: "Glob only applicable to filenames.",
+        end: 'error',
+        messageLog: 'Glob only applicable to filenames.',
+        err_output: 'Glob only applicable to filenames.'
       };
       executor.end(endOptions);
-    }else{
-
+    } else {
       // Get files from dirName:
-      const listParams = {"Bucket": params.bucket, "Prefix": dirName?dirName:params.remote_path};
-
+      const listParams = { Bucket: params.bucket, Prefix: dirName ? dirName : params.remote_path };
       S3.listObjects(listParams, (err, data) => {
-        if (err){
+        if (err) {
           const endOptions = {
-            end: "error",
+            end: 'error',
             messageLog: `S3 delete Error: ${err}`,
             err_output: `S3 delete Error: ${err}`
           };
           executor.end(endOptions);
-        }else{
+        } else {
           let patternGlob = path.basename(params.remote_path);
           let valRegExp = globToRegExp(patternGlob);
           let matchFiles = [];
 
           data.Contents.map(file => {
-            if (valRegExp.test(file.Key)){
+            if (valRegExp.test(file.Key)) {
               matchFiles.push(file.Key);
             }
           });
 
           _deleteS3Async(S3, params.bucket, matchFiles)
-            .then(res =>{
+            .then(res => {
               const endOptions = {
-                end: "end",
+                end: 'end',
                 data_output: res
               };
               executor.end(endOptions);
             })
-            .catch(err =>{
+            .catch(err => {
               const endOptions = {
-                end: "error",
+                end: 'error',
                 messageLog: `S3 delete Error: ${err}`,
                 err_output: `S3 delete Error: ${err}`
               };
@@ -148,21 +147,20 @@ function _delete(S3, params, executor){
             });
         }
       });
-
     }
-  }else{
+  } else {
     // Delete one file no glob
     _deleteS3Async(S3, params.bucket, params.remote_path)
-      .then(res =>{
+      .then(res => {
         const endOptions = {
-          end: "end",
+          end: 'end',
           data_output: res
         };
         executor.end(endOptions);
       })
-      .catch(err =>{
+      .catch(err => {
         const endOptions = {
-          end: "error",
+          end: 'error',
           messageLog: `S3 delete Error: ${err}`,
           err_output: `S3 delete Error: ${err}`
         };
@@ -171,32 +169,71 @@ function _delete(S3, params, executor){
   }
 }
 
-function _deleteS3Async(s3, bucket, files){
-  return new Promise((resolve,reject) => {
-    if (files.constructor !== Array){
+function _deleteS3Async(s3, bucket, files) {
+  return new Promise((resolve, reject) => {
+    if (files.constructor !== Array) {
       files = [files];
     }
 
     let filesObj = [];
-    files.map(file =>{
-      filesObj.push({"Key":file});
+    files.map(file => {
+      filesObj.push({ Key: file });
     });
 
-    if (filesObj.length){
-      const deleteParams = {"Bucket": bucket, "Delete": {"Objects":filesObj}};
+    if (filesObj.length) {
+      const deleteParams = { Bucket: bucket, Delete: { Objects: filesObj } };
       s3.deleteObjects(deleteParams, (err, data) => {
         if (err) {
           reject(err);
-        }
-        else {
+        } else {
           resolve(data);
         }
       });
-    }else{
+    } else {
       resolve();
     }
   });
 }
 
+/**
+ * Download a file from s3 bucket
+ * @param s3
+ * @param params
+ * @param executor
+ * @private
+ */
+function _download(s3, params, executor) {
+  let fileStream = fs.createWriteStream(params.local_file);
+  let s3Stream = s3.getObject({ Bucket: params.bucket, Key: params.remote_file }).createReadStream();
+
+  // Listen for errors returned by the service
+  s3Stream.on('error', function (err) {
+    // NoSuchKey: The specified key does not exist
+    const endOptions = {
+      end: 'error',
+      messageLog: `S3 download file Error: ${err}`,
+      err_output: `S3 download file Error: ${err}`
+    };
+    executor.end(endOptions);
+  });
+
+  s3Stream
+    .pipe(fileStream)
+    .on('error', function (err) {
+      // capture any errors that occur when writing data to the file
+      const endOptions = {
+        end: 'error',
+        messageLog: `S3 download file Error: ${err}`,
+        err_output: `S3 download file Error: ${err}`
+      };
+      executor.end(endOptions);
+    })
+    .on('close', function () {
+      const endOptions = {
+        end: 'end'
+      };
+      executor.end(endOptions);
+    });
+}
 
 module.exports = s3Executor;

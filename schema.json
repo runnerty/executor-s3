@@ -4,16 +4,7 @@
   "definitions": {
     "config": {
       "type": "object",
-      "required": [
-        "id",
-        "type",
-        "apiVersion",
-        "accessKeyId",
-        "secretAccessKey",
-        "bucket",
-        "method",
-        "region"
-      ],
+      "required": ["id", "type", "apiVersion", "accessKeyId", "secretAccessKey", "bucket", "method", "region"],
       "properties": {
         "id": {
           "type": "string"
@@ -46,27 +37,20 @@
       "type": "object",
       "anyOf": [
         {
-          "required": [
-            "id",
-            "local_file",
-            "remote_file"
-          ],
+          "required": ["id", "local_file", "remote_file"],
           "properties": {
             "id": { "type": "string" },
             "local_file": { "type": "string" },
-            "remote_file": { "type": ["string","array"] },
+            "remote_file": { "type": ["string", "array"] },
             "method": { "type": "string" },
             "bucket": { "type": "string" }
           }
         },
         {
-          "required": [
-            "id",
-            "remote_path"
-          ],
+          "required": ["id", "remote_path"],
           "properties": {
             "id": { "type": "string" },
-            "remote_path": { "type": ["string","array"] },
+            "remote_path": { "type": ["string", "array"] },
             "method": { "type": "string" },
             "bucket": { "type": "string" }
           }
