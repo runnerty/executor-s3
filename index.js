@@ -34,6 +34,9 @@ class s3Executor extends Execution {
       case "delete":
         _delete(s3, params, _this);
         break;
+      case "download":
+        _download(s3, params, _this);
+        break;
       default:
         const endOptions = {
           end: "error",
@@ -195,6 +198,44 @@ function _deleteS3Async(s3, bucket, files){
     }else{
       resolve();
     }
+  });
+}
+
+/**
+ * Download a file from s3 bucket
+ * @param s3
+ * @param params
+ * @param executor
+ * @private
+ */
+function _download(s3, params, executor) {
+  let fileStream = fs.createWriteStream(params.local_file);
+  let s3Stream = s3.getObject({Bucket: params.bucket, Key: params.remote_file}).createReadStream();
+
+  // Listen for errors returned by the service
+  s3Stream.on('error', function(err) {
+      // NoSuchKey: The specified key does not exist
+      const endOptions = {
+        end: "error",
+        messageLog: `S3 download file Error: ${err}`,
+        err_output: `S3 download file Error: ${err}`
+      };
+      executor.end(endOptions);
+  });
+
+  s3Stream.pipe(fileStream).on('error', function(err) {
+      // capture any errors that occur when writing data to the file
+      const endOptions = {
+        end: "error",
+        messageLog: `S3 download file Error: ${err}`,
+        err_output: `S3 download file Error: ${err}`
+      };
+      executor.end(endOptions);
+  }).on('close', function() {
+    const endOptions = {
+      end: "end"
+    };
+    executor.end(endOptions);
   });
 }
 
