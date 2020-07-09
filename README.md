@@ -25,6 +25,30 @@
   "remote_file":"dir_one/:DD-:MM-:YY/test_up.txt"
 }
 ```
+#### Download
+* Configuration sample:
+```json
+{
+  "id":"s3_default",
+  "type":"@runnerty-executor-s3",
+  "apiVersion": "2006-03-01",
+  "accessKeyId": "ABC123",
+  "secretAccessKey": "ABC123",
+  "bucket":"my.s3bucket.com",
+  "method":"download",
+  "region": "eu-west-1"
+}
+```
+
+* Plan sample:
+```json
+{
+  "id":"s3_default",
+  "bucket":"backup.test.com",
+  "remote_file":"test.txt",
+  "local_file":"/tmp/test_down.txt",
+}
+```
 #### Delete
 * Configuration sample:
 ```json
