@@ -1,0 +1,81 @@
+{
+  "$schema": "https://raw.githubusercontent.com/runnerty/schemas/master/schemas/3.1/plan.json",
+  "chains": [
+    {
+      "id": "CHAIN_S3_SAMPLE",
+      "name": "S3 module example chain",
+      "defaults_processes": {
+        "notifications": {
+          "on_start": [
+            {
+              "id": "console_default",
+              "message": "@GETDATE('YYYY-MM-DD HH:mm:ss') START: PROCESS @GV(PROCESS_ID)"
+            }
+          ],
+          "on_fail": [
+            {
+              "id": "console_default",
+              "message": "@GETDATE('YYYY-MM-DD HH:mm:ss') ERROR: PROCESS @GV(PROCESS_ID): @GV(PROCESS_EXEC_ERR_OUTPUT)",
+              "mode": "error"
+            }
+          ],
+          "on_end": [
+            {
+              "id": "console_default",
+              "message": "@GETDATE('YYYY-MM-DD HH:mm:ss') END: PROCESS @GV(PROCESS_ID)"
+            }
+          ]
+        }
+      },
+      "processes": [
+        {
+          "id": "S3_UPLOAD_SAMPLE",
+          "name": "S3 UPLOAD SAMPLE",
+          "exec": {
+            "id": "s3_default",
+            "method": "upload",
+            "local_file": "/tmp/test.txt",
+            "remote_file": "dir_one/dir_two/test_up.txt"
+          }
+        },
+        {
+          "id": "S3_DOWNLOAD_SAMPLE",
+          "name": "S3 DOWNLOAD SAMPLE",
+          "exec": {
+            "id": "s3_default",
+            "method": "download",
+            "remote_file": "test.txt",
+            "local_file": "/tmp/test_down.txt"
+          }
+        },
+        {
+          "id": "S3_DELETE_SAMPLE",
+          "name": "S3 DELETE SAMPLE",
+          "exec": {
+            "id": "s3_default",
+            "method": "delete",
+            "remote_path": "folder_test/foo.txt"
+          }
+        },
+        {
+          "id": "S3_DELETE_ARRAY_SAMPLE",
+          "name": "S3 DELETE ARRAY SAMPLE",
+          "exec": {
+            "id": "s3_default",
+            "method": "delete",
+            "remote_path": ["folder_test/sample.txt", "folder_test/sample.zip"]
+          }
+        },
+        {
+          "id": "S3_DELETE_GLOB_PATTERN_SAMPLE",
+          "name": "S3 DELETE GLOB PATTERN SAMPLE",
+          "exec": {
+            "id": "s3_default",
+            "method": "delete",
+            "remote_path": "folder_test/*.txt"
+          }
+        }
+      ]
+    }
+  ]
+}
