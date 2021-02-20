@@ -54,7 +54,7 @@ Add in [config.json]:
 
 Add in [plan.json]:
 
-* Upload
+- Upload
 
 ```json
 {
@@ -65,7 +65,7 @@ Add in [plan.json]:
 }
 ```
 
-* Download
+- Download
 
 ```json
 {
@@ -76,7 +76,7 @@ Add in [plan.json]:
 }
 ```
 
-* Delete
+- Delete
 
 ```json
 {
@@ -86,7 +86,7 @@ Add in [plan.json]:
 }
 ```
 
-* Delete array of files
+- Delete array of files
 
 ```json
 {
@@ -96,7 +96,7 @@ Add in [plan.json]:
 }
 ```
 
-* Delete glob pattern
+- Delete glob pattern
 
 ```json
 {

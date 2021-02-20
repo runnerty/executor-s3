@@ -23,7 +23,7 @@
   "homepage": "https://github.com/runnerty/executor-s3#readme",
   "dependencies": {
     "@runnerty/module-core": "~3.0.4",
-    "aws-sdk": "^2.847.0",
+    "aws-sdk": "^2.848.0",
     "glob-to-regexp": "^0.4.1",
     "is-glob": "^4.0.1"
   },
