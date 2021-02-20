@@ -1,10 +1,10 @@
 {
-  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$schema": "http://json-schema.org/draft-07/schema#",
   "title": "@runnerty-executor-s3",
   "definitions": {
     "config": {
       "type": "object",
-      "required": ["id", "type", "apiVersion", "accessKeyId", "secretAccessKey", "bucket", "method", "region"],
+      "required": ["id", "type", "apiVersion", "accessKeyId", "secretAccessKey", "region"],
       "properties": {
         "id": {
           "type": "string"
@@ -41,8 +41,8 @@
           "properties": {
             "id": { "type": "string" },
             "local_file": { "type": "string" },
-            "remote_file": { "type": ["string", "array"] },
-            "method": { "type": "string" },
+            "remote_file": { "type": "string" },
+            "method": { "type": "string", "enum": ["upload", "download"] },
             "bucket": { "type": "string" }
           }
         },
@@ -51,7 +51,7 @@
           "properties": {
             "id": { "type": "string" },
             "remote_path": { "type": ["string", "array"] },
-            "method": { "type": "string" },
+            "method": { "type": "string", "enum": ["delete"] },
             "bucket": { "type": "string" }
           }
         }

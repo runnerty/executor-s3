@@ -1,12 +1,10 @@
 node_modules
-.all-contributorsrc
 .eslintignore
 .gitignore
 .prettierignore
+.npmignore
 LICENSE
 *.png
 *.txt
 TODO
-docs/functions.md
-*.md
-test.log
+.DS_Store

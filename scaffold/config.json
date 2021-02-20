@@ -1,0 +1,13 @@
+{
+  "executors": [
+    {
+      "id": "s3_default",
+      "type": "@runnerty-executor-s3",
+      "apiVersion": "2006-03-01",
+      "accessKeyId": "ABC123",
+      "secretAccessKey": "ABC123",
+      "region": "eu-west-1",
+      "bucket": "my.s3bucket.com"
+    }
+  ]
+}
