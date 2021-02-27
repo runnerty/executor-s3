@@ -1,6 +1,6 @@
 {
   "name": "@runnerty/executor-s3",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "Runnerty module: s3 executor",
   "author": "Runnerty Tech",
   "license": "MIT",
@@ -22,14 +22,14 @@
   },
   "homepage": "https://github.com/runnerty/executor-s3#readme",
   "dependencies": {
-    "@runnerty/module-core": "~3.0.4",
-    "aws-sdk": "^2.848.0",
-    "glob-to-regexp": "^0.4.1",
-    "is-glob": "^4.0.1"
+    "@runnerty/module-core": "~3.0.5",
+    "aws-sdk": "^2.853.0",
+    "glob-to-regexp": "~0.4.1",
+    "is-glob": "~4.0.1"
   },
   "devDependencies": {
     "eslint": "^7.20.0",
-    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "prettier": "^2.2.1"
   }
