@@ -5,7 +5,7 @@
   <p align="center">Smart Processes Management</p>
 </p>
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Dependency Status][david-badge]][david-badge-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url]
 <a href="#badge">
 <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg">
 </a>
@@ -20,18 +20,18 @@ Through NPM
 npm i @runnerty/executor-s3
 ```
 
-You can also add modules to your project with [runnerty-cli]
+You can also add modules to your project with [runnerty]
 
 ```bash
-npx runnerty-cli add @runnerty/executor-s3
+npx runnerty add @runnerty/executor-s3
 ```
 
-This command installs the module in your project, adds example configuration in your `config.json` and creates an example plan of use.
+This command installs the module in your project, adds example configuration in your [config.json] and creates an example plan of use.
 
-If you have installed [runnerty-cli] globally you can include the module with this command:
+If you have installed [runnerty] globally you can include the module with this command:
 
 ```bash
-rty add @runnerty/executor-s3
+runnerty add @runnerty/executor-s3
 ```
 
 ### Configuration sample:
