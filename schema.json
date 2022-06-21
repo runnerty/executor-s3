@@ -28,6 +28,18 @@
         "method": {
           "type": "string"
         },
+        "acl": {
+          "type": "string",
+          "enum": [
+            "private",
+            "public-read",
+            "public-read-write",
+            "authenticated-read",
+            "aws-exec-read",
+            "bucket-owner-read",
+            "bucket-owner-full-control"
+          ]
+        },
         "region": {
           "type": "string"
         }
@@ -43,6 +55,18 @@
             "local_file": { "type": "string" },
             "remote_file": { "type": "string" },
             "method": { "type": "string", "enum": ["upload", "download"] },
+            "acl": {
+              "type": "string",
+              "enum": [
+                "private",
+                "public-read",
+                "public-read-write",
+                "authenticated-read",
+                "aws-exec-read",
+                "bucket-owner-read",
+                "bucket-owner-full-control"
+              ]
+            },
             "bucket": { "type": "string" }
           }
         },

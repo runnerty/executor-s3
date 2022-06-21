@@ -61,7 +61,12 @@ class s3Executor extends Executor {
       this.logger.log('error', 'S3 upload error reading local file', params.local_file, err);
     });
 
-    const uploadParams = { Bucket: params.bucket, Key: params.remote_file, Body: fileStream };
+    const uploadParams = {
+      Bucket: params.bucket,
+      Key: params.remote_file,
+      Body: fileStream,
+      ACL: params?.ACL || params?.acl || undefined
+    };
 
     s3.upload(uploadParams, (err, data) => {
       if (err) {
