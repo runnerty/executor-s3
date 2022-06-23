@@ -65,7 +65,8 @@ class s3Executor extends Executor {
       Bucket: params.bucket,
       Key: params.remote_file,
       Body: fileStream,
-      ACL: params?.ACL || params?.acl || undefined
+      ACL: params?.ACL || undefined,
+      ContentType: params?.ContentType || undefined
     };
 
     s3.upload(uploadParams, (err, data) => {
